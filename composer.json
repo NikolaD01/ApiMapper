@@ -1,0 +1,14 @@
+{
+  "name": "sf/api-mapper",
+  "description": "API mapper to fit Wordpress CMS",
+  "type": "wp-plugin",
+  "require": {
+    "php": ">=8.1",
+    "guzzlehttp/guzzle": "^7.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "AM\\App\\": "app/"
+    }
+  }
+}
