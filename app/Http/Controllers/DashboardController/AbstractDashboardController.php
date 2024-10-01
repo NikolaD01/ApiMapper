@@ -1,9 +1,6 @@
 <?php
 
 namespace AM\App\Http\Controllers\DashboardController;
-
-use AM\App\Http\Utility\Helpers\View;
-
 abstract class AbstractDashboardController
 {
     protected string $menuSlug;
@@ -19,7 +16,7 @@ abstract class AbstractDashboardController
 
     abstract public function addMenu() : void;
     abstract public function processForm() : void;
-
+    abstract public function view(): void;
     public function render() : void
     {
         if (!current_user_can($this->capability)) {
@@ -28,8 +25,8 @@ abstract class AbstractDashboardController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->processForm();
         }
-        View::load('dashboard');
 
+        $this->view();
     }
 
 

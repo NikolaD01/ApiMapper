@@ -8,7 +8,7 @@ class LoginSelect
     constructor(select: HTMLSelectElement) {
         this.select = select;
         this.selectedValue = this.select.value;
-        this.action = "login_method_select";
+        this.action = "am_login_method_select";
         this.postId = (document.getElementById("post_ID") as HTMLInputElement)?.value || '';
         this.methodContainer = document.getElementById('selected_method') as HTMLElement;
     }

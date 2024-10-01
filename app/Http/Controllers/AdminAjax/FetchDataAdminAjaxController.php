@@ -6,7 +6,7 @@ use AM\App\Http\Services\API\ApiService;
 use AM\App\Http\Utility\Helpers\ApiAuthHelper;
 use GuzzleHttp\Exception\GuzzleException;
 
-class AMFetchDataAdminAjaxController extends AbstractAdminAjaxController
+class FetchDataAdminAjaxController extends AbstractAdminAjaxController
 {
     protected ApiService $apiService;
     public function __construct() {
@@ -36,8 +36,17 @@ class AMFetchDataAdminAjaxController extends AbstractAdminAjaxController
             'name' => 'test',
             'depth' => [
                 'second_name' => 'test',
+                'just',
                 'second_depth' => [
                     'third_name' => 'test',
+                    'third_depth' => [
+                        'fourth_name' => 'test',
+                        'fourth_depth' => [
+                            'fifth_name' => 'test',
+                            'test',
+                            'testTwo'
+                        ]
+                    ]
                 ]
             ]
         ];

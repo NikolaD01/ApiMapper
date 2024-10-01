@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/components/amFetchData.ts":
-/*!***************************************!*\
-  !*** ./src/components/amFetchData.ts ***!
-  \***************************************/
+/***/ "./src/components/fetchApiData.ts":
+/*!****************************************!*\
+  !*** ./src/components/fetchApiData.ts ***!
+  \****************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -13,7 +13,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 class FetchData {
     constructor(form) {
         this.form = form;
-        this.action = "amfetch_data";
+        this.action = "am_fetch_data";
         this.postId = form.querySelector("select[name='api-selector']").value;
         this.container = document.getElementById('data-output');
         this.fetch();
@@ -55,8 +55,8 @@ class FetchData {
                 else {
                     let fieldHtml = `
                     <div>
-                        <input type="checkbox" class="api-field" value="${newKey}" />
-                        <label>${newKey}: ${value}</label>
+                        <input type="submit" class="api-field" value="${newKey}" />
+                        <label>${value}</label>
                     </div>`;
                     container.insertAdjacentHTML('beforeend', fieldHtml);
                 }
@@ -65,14 +65,14 @@ class FetchData {
         else {
             let fieldHtml = `
             <div>
-                <input type="checkbox" class="api-field" value="${parentKey}" />
-                <label>${parentKey}: ${item}</label>
+                <input type="submit" class="api-field" value="${parentKey}" />
+                <label>${item}</label>
             </div>`;
             container.insertAdjacentHTML('beforeend', fieldHtml);
         }
     }
 }
-const amFetchData = () => {
+const fetchApiData = () => {
     const form = document.getElementById('am_api_get');
     console.log(form);
     if (form) {
@@ -82,7 +82,7 @@ const amFetchData = () => {
         });
     }
 };
-exports["default"] = amFetchData;
+exports["default"] = fetchApiData;
 
 
 /***/ }),
@@ -100,7 +100,7 @@ class LoginSelect {
         var _a;
         this.select = select;
         this.selectedValue = this.select.value;
-        this.action = "login_method_select";
+        this.action = "am_login_method_select";
         this.postId = ((_a = document.getElementById("post_ID")) === null || _a === void 0 ? void 0 : _a.value) || '';
         this.methodContainer = document.getElementById('selected_method');
     }
@@ -158,10 +158,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const loginMethodSelect_1 = __importDefault(__webpack_require__(/*! ./components/loginMethodSelect */ "./src/components/loginMethodSelect.ts"));
-const amFetchData_1 = __importDefault(__webpack_require__(/*! ./components/amFetchData */ "./src/components/amFetchData.ts"));
+const fetchApiData_1 = __importDefault(__webpack_require__(/*! ./components/fetchApiData */ "./src/components/fetchApiData.ts"));
 const init = () => {
     (0, loginMethodSelect_1.default)();
-    (0, amFetchData_1.default)();
+    (0, fetchApiData_1.default)();
 };
 init();
 

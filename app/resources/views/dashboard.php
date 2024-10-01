@@ -8,17 +8,21 @@ use AM\App\Http\Utility\Helpers\View;
         <table class="form-table">
             <tr>
                 <th scope="row">
-                    <label for="api_url"><?php esc_html_e('API URL', 'api-mapper'); ?></label>
+                    <label for="api_url"><?php esc_html_e('Choose CPT', 'api-mapper'); ?></label>
                 </th>
                 <th scope="row">
-                    <label for="api_key"><?php esc_html_e('API Key', 'api-mapper'); ?></label>
+                    <label for="api_key"><?php esc_html_e('Choose API', 'api-mapper'); ?></label>
                 </th>
             </tr>
             <tr>
-                <td> TEST</td>
                 <td>
                     <?php
-                     View::load('components/api-select');
+                    View::load('components/selects/cpt-select', $args ?? []);
+                    ?>
+                </td>
+                <td>
+                    <?php
+                     View::load('components/selects/api-select', $args ?? []);
                      View::load('components/data-output');
                     ?>
                 </td>

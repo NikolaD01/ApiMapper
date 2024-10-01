@@ -1,5 +1,5 @@
 import loginMethodSelect from "./components/loginMethodSelect";
-import amFetchData from "./components/amFetchData";
+import fetchApiData from "./components/fetchApiData";
 
 declare global {
     interface Window {
@@ -14,7 +14,7 @@ declare global {
 
 const init = () => {
     loginMethodSelect();
-    amFetchData();
+    fetchApiData();
 };
 
 init();

@@ -6,7 +6,7 @@ class FetchData
     public form!: HTMLFormElement;
     constructor(form : HTMLFormElement) {
         this.form = form;
-        this.action = "amfetch_data";
+        this.action = "am_fetch_data";
         this.postId = (form.querySelector("select[name='api-selector']") as HTMLSelectElement).value;
         this.container = document.getElementById('data-output');
         this.fetch();
@@ -51,8 +51,8 @@ class FetchData
                 } else {
                     let fieldHtml = `
                     <div>
-                        <input type="checkbox" class="api-field" value="${newKey}" />
-                        <label>${newKey}: ${value}</label>
+                        <input type="submit" class="api-field" value="${newKey}" />
+                        <label>${value}</label>
                     </div>`;
                     container.insertAdjacentHTML('beforeend', fieldHtml);
                 }
@@ -60,15 +60,15 @@ class FetchData
         } else {
             let fieldHtml = `
             <div>
-                <input type="checkbox" class="api-field" value="${parentKey}" />
-                <label>${parentKey}: ${item}</label>
+                <input type="submit" class="api-field" value="${parentKey}" />
+                <label>${item}</label>
             </div>`;
             container.insertAdjacentHTML('beforeend', fieldHtml);
         }
     }
 }
 
-const amFetchData = () => {
+const fetchApiData = () => {
     const form = document.getElementById('am_api_get') as HTMLFormElement;
     console.log(form);
     if (form) {
@@ -78,4 +78,4 @@ const amFetchData = () => {
         })
     }
 }
-export default amFetchData;
+export default fetchApiData;
