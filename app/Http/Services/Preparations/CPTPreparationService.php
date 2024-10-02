@@ -7,8 +7,10 @@ use AM\App\Http\Interfaces\PreparationInterface;
 class CPTPreparationService implements PreparationInterface
 {
 
-    public function prepare()
+    public function prepare(array $args): ?array
     {
         // TODO: Implement preparator() method.
+
+        return [];
     }
 }

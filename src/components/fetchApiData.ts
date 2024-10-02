@@ -70,7 +70,6 @@ class FetchData
 
 const fetchApiData = () => {
     const form = document.getElementById('am_api_get') as HTMLFormElement;
-    console.log(form);
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();

@@ -74,7 +74,6 @@ class FetchData {
 }
 const fetchApiData = () => {
     const form = document.getElementById('am_api_get');
-    console.log(form);
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -83,6 +82,53 @@ const fetchApiData = () => {
     }
 };
 exports["default"] = fetchApiData;
+
+
+/***/ }),
+
+/***/ "./src/components/fetchCustomPostTypeData.ts":
+/*!***************************************************!*\
+  !*** ./src/components/fetchCustomPostTypeData.ts ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+class FetchData {
+    constructor(form) {
+        this.form = form;
+        this.action = "am_fetch_custom_post_type_data";
+        this.postType = form.querySelector("select[name='cpt-selector']").value;
+        this.fetch();
+    }
+    fetch() {
+        fetch(`${window.admin_globals.ajax_url}?action=${this.action}`, {
+            method: "POST",
+            credentials: "same-origin",
+            body: new URLSearchParams({
+                'post_type': this.postType,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+            if (data.success) {
+            }
+        })
+            .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+}
+const fetchCustomPostTypeData = () => {
+    const form = document.getElementById('am_cpt_get');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            new FetchData(form);
+        });
+    }
+};
+exports["default"] = fetchCustomPostTypeData;
 
 
 /***/ }),
@@ -159,9 +205,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const loginMethodSelect_1 = __importDefault(__webpack_require__(/*! ./components/loginMethodSelect */ "./src/components/loginMethodSelect.ts"));
 const fetchApiData_1 = __importDefault(__webpack_require__(/*! ./components/fetchApiData */ "./src/components/fetchApiData.ts"));
+const fetchCustomPostTypeData_1 = __importDefault(__webpack_require__(/*! ./components/fetchCustomPostTypeData */ "./src/components/fetchCustomPostTypeData.ts"));
 const init = () => {
     (0, loginMethodSelect_1.default)();
     (0, fetchApiData_1.default)();
+    (0, fetchCustomPostTypeData_1.default)();
 };
 init();
 
