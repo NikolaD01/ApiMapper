@@ -3,5 +3,9 @@
 namespace AM\App\Http\Interfaces;
 interface PreparationInterface
 {
-    public function prepare();
+    /**
+     * @param array $args
+     * @return array|null
+     */
+    public function prepare(array $args) : ?array;
 }

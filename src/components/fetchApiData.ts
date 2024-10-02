@@ -6,7 +6,7 @@ class FetchData
     public form!: HTMLFormElement;
     constructor(form : HTMLFormElement) {
         this.form = form;
-        this.action = "am_fetch_data";
+        this.action = "am_fetch_api_data";
         this.postId = (form.querySelector("select[name='api-selector']") as HTMLSelectElement).value;
         this.container = document.getElementById('data-output');
         this.fetch();
