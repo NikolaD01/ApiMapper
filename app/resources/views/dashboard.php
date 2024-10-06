@@ -14,6 +14,9 @@ use AM\App\Http\Utility\Helpers\View;
                     View::load('components/buttons/submit', [
                             'text' => 'Load data'
                     ]);
+                    View::load('components/data-output', [
+                        'id' => 'cpt-data-output'
+                    ]);
                 ?>
             </form>
         </div>
@@ -25,7 +28,9 @@ use AM\App\Http\Utility\Helpers\View;
                     View::load('components/buttons/submit', [
                             'text' => 'Load data'
                     ]);
-                    View::load('components/data-output');
+                    View::load('components/data-output', [
+                            'id' => 'api-data-output'
+                    ]);
                 ?>
             </form>
         </div>

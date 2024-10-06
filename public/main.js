@@ -62,7 +62,7 @@ class FetchData {
         this.form = form;
         this.action = "am_fetch_api_data";
         this.postId = form.querySelector("select[name='api-selector']").value;
-        this.container = document.getElementById('data-output');
+        this.container = document.getElementById('api-data-output');
         this.fetch();
     }
     fetch() {
@@ -146,6 +146,7 @@ class FetchData {
         this.form = form;
         this.action = "am_fetch_custom_post_type_data";
         this.postType = form.querySelector("select[name='cpt-selector']").value;
+        this.container = document.getElementById('cpt-data-output');
         this.fetch();
     }
     fetch() {
@@ -159,11 +160,45 @@ class FetchData {
             .then(response => response.json())
             .then(data => {
             if (data.success) {
+                if (this.container) {
+                    this.container.innerHTML = "";
+                }
+                this.displayData(data.data, this.container);
             }
         })
             .catch((error) => {
             console.error('Error:', error);
         });
+    }
+    displayData(item, container, parentKey = '') {
+        if (Array.isArray(item)) {
+            item.forEach((childItem, index) => {
+                this.displayData(childItem, container, `${parentKey}[${index}]`);
+            });
+        }
+        else if (typeof item === 'object' && item !== null) {
+            Object.keys(item).forEach(key => {
+                let value = item[key];
+                let newKey = parentKey ? `${parentKey}.${key}` : key;
+                if (typeof value === 'object') {
+                    this.displayData(value, container, newKey);
+                }
+                else {
+                    let fieldHtml = `
+                <div>
+                    <input type="submit" class="cpt-field" value="${value}" />
+                </div>`;
+                    container.insertAdjacentHTML('beforeend', fieldHtml);
+                }
+            });
+        }
+        else {
+            let fieldHtml = `
+        <div>
+            <input type="submit" class="cpt-field" value="${item}" />
+        </div>`;
+            container.insertAdjacentHTML('beforeend', fieldHtml);
+        }
     }
 }
 const fetchCustomPostTypeData = () => {

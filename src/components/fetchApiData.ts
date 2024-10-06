@@ -8,7 +8,7 @@ class FetchData
         this.form = form;
         this.action = "am_fetch_api_data";
         this.postId = (form.querySelector("select[name='api-selector']") as HTMLSelectElement).value;
-        this.container = document.getElementById('data-output');
+        this.container = document.getElementById('api-data-output');
         this.fetch();
 
     }
