@@ -22,7 +22,15 @@ class MetafieldMappingDashboardController extends AbstractSubmenuController
 
     public function processForm(): void
     {
-        // TODO: Implement ProcessForm method.
+        if (isset($_POST['cpt-selector'], $_POST['metafields']) && !empty($_POST['metafields'])) {
+            $cpt = sanitize_text_field($_POST['cpt-selector']);
+            $metafields = array_map('sanitize_text_field', $_POST['metafields']);
+            json_encode($metafields);
+            $option_name = 'am_map_json_' . $cpt;
+
+            update_option($option_name, $metafields);
+
+        }
     }
 
     public function view(): void
