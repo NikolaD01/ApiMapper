@@ -26,10 +26,9 @@ class MetafieldMappingDashboardController extends AbstractSubmenuController
             $cpt = sanitize_text_field($_POST['cpt-selector']);
             $metafields = array_map('sanitize_text_field', $_POST['metafields']);
             json_encode($metafields);
-            $option_name = 'am_map_json_' . $cpt;
+            $option_name = Constants::getJsonOptionPrefix() . $cpt;
 
             update_option($option_name, $metafields);
-
         }
     }
 

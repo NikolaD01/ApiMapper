@@ -10,8 +10,5 @@
                 <?php endforeach; ?>
             </select>
         </label>
+    </p>
 
-    </p>
-    <p>
-        <?php submit_button(__('Load data', 'primary')); ?>
-    </p>

@@ -2,9 +2,12 @@
     use AM\App\Http\Utility\Helpers\View;
 ?>
 <div class="wrap">
-    <form>
+    <form method="POST" action="<?= get_permalink() ?>">
         <?php
-            View::load('components/selects/cpt-select', $args ?? []);
+            View::load('components/selects/cpt-select', [
+              'cpts' => $args['cpts'] ?? [],
+              'class' => 'js-cpt-metafield-select'
+            ]);
         ?>
         <div id="metafields-inputs">
         <?php

@@ -11,7 +11,9 @@ use AM\App\Http\Utility\Helpers\View;
             <form id="am_cpt_get" method="post" action="">
                 <?php
                     View::load('components/selects/cpt-select', $args ?? []);
-                    View::load('components/buttons/submit');
+                    View::load('components/buttons/submit', [
+                            'text' => 'Load data'
+                    ]);
                 ?>
             </form>
         </div>
@@ -19,9 +21,11 @@ use AM\App\Http\Utility\Helpers\View;
             <label for=""><?php esc_html_e('Choose API', 'api-mapper'); ?></label>
             <form id="am_api_get" method="post" action="">
                 <?php
-                 View::load('components/selects/api-select', $args ?? []);
-                 View::load('components/data-output');
-                 View::load('components/buttons/submit');
+                    View::load('components/selects/api-select', $args ?? []);
+                    View::load('components/buttons/submit', [
+                            'text' => 'Load data'
+                    ]);
+                    View::load('components/data-output');
                 ?>
             </form>
         </div>
