@@ -2,6 +2,53 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/components/addMetafieldInputs.ts":
+/*!**********************************************!*\
+  !*** ./src/components/addMetafieldInputs.ts ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+class AddMetafieldInputs {
+    constructor() {
+        this.action = "am_add_metafield_inputs";
+        this.clickCount = 0;
+        this.container = document.getElementById('metafields-inputs');
+    }
+    fetch() {
+        this.clickCount++;
+        fetch(`${window.admin_globals.ajax_url}?action=${this.action}`, {
+            method: "POST",
+            credentials: "same-origin",
+            body: new URLSearchParams({
+                'count': this.clickCount.toString()
+            })
+        })
+            .then(r => r.json())
+            .then(r => {
+            this.append(r.data.view);
+        })
+            .catch(error => console.error('Error:', error));
+    }
+    append(view) {
+        if (this.container) {
+            this.container.insertAdjacentHTML('beforeend', view);
+        }
+    }
+}
+const addMetafieldInputs = () => {
+    const input = document.getElementById('am-add-metafield');
+    if (input) {
+        const instance = new AddMetafieldInputs();
+        input.addEventListener('click', () => instance.fetch());
+    }
+};
+exports["default"] = addMetafieldInputs;
+
+
+/***/ }),
+
 /***/ "./src/components/fetchApiData.ts":
 /*!****************************************!*\
   !*** ./src/components/fetchApiData.ts ***!
@@ -206,10 +253,12 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const loginMethodSelect_1 = __importDefault(__webpack_require__(/*! ./components/loginMethodSelect */ "./src/components/loginMethodSelect.ts"));
 const fetchApiData_1 = __importDefault(__webpack_require__(/*! ./components/fetchApiData */ "./src/components/fetchApiData.ts"));
 const fetchCustomPostTypeData_1 = __importDefault(__webpack_require__(/*! ./components/fetchCustomPostTypeData */ "./src/components/fetchCustomPostTypeData.ts"));
+const addMetafieldInputs_1 = __importDefault(__webpack_require__(/*! ./components/addMetafieldInputs */ "./src/components/addMetafieldInputs.ts"));
 const init = () => {
     (0, loginMethodSelect_1.default)();
     (0, fetchApiData_1.default)();
     (0, fetchCustomPostTypeData_1.default)();
+    (0, addMetafieldInputs_1.default)();
 };
 init();
 

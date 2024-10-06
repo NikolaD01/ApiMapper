@@ -1,11 +1,8 @@
-<div>
-    <div id="metafields-inputs">
-        <p>
-            <label for="metafield_1">Enter Metafield Key:</label>
-            <input type="text" name="metafields[]" id="metafield_1" placeholder="Meta key">
-        </p>
-    </div>
+<?php
+    $count = $args['count'] ?? 0;
+?>
+
     <p>
-        <button type="button" id="add-metafield">+ Add Another Metafield</button>
+        <label for="metafield_<?= $count ?>">Enter Metafield Key:</label>
+        <input type="text" name="metafields[]" id="metafield_<?= $count ?>" placeholder="Meta key">
     </p>
-</div>
