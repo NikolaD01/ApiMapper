@@ -1,5 +1,7 @@
 import loginMethodSelect from "./components/loginMethodSelect";
-import amFetchData from "./components/amFetchData";
+import fetchApiData from "./components/fetchApiData";
+import fetchCustomPostTypeData from "./components/fetchCustomPostTypeData";
+import addMetafieldInputs from "./components/addMetafieldInputs";
 
 declare global {
     interface Window {
@@ -14,7 +16,9 @@ declare global {
 
 const init = () => {
     loginMethodSelect();
-    amFetchData();
+    fetchApiData();
+    fetchCustomPostTypeData();
+    addMetafieldInputs();
 };
 
 init();

@@ -2,10 +2,57 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/components/amFetchData.ts":
-/*!***************************************!*\
-  !*** ./src/components/amFetchData.ts ***!
-  \***************************************/
+/***/ "./src/components/addMetafieldInputs.ts":
+/*!**********************************************!*\
+  !*** ./src/components/addMetafieldInputs.ts ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+class AddMetafieldInputs {
+    constructor() {
+        this.action = "am_add_metafield_inputs";
+        this.clickCount = 0;
+        this.container = document.getElementById('metafields-inputs');
+    }
+    fetch() {
+        this.clickCount++;
+        fetch(`${window.admin_globals.ajax_url}?action=${this.action}`, {
+            method: "POST",
+            credentials: "same-origin",
+            body: new URLSearchParams({
+                'count': this.clickCount.toString()
+            })
+        })
+            .then(r => r.json())
+            .then(r => {
+            this.append(r.data.view);
+        })
+            .catch(error => console.error('Error:', error));
+    }
+    append(view) {
+        if (this.container) {
+            this.container.insertAdjacentHTML('beforeend', view);
+        }
+    }
+}
+const addMetafieldInputs = () => {
+    const input = document.getElementById('am-add-metafield');
+    if (input) {
+        const instance = new AddMetafieldInputs();
+        input.addEventListener('click', () => instance.fetch());
+    }
+};
+exports["default"] = addMetafieldInputs;
+
+
+/***/ }),
+
+/***/ "./src/components/fetchApiData.ts":
+/*!****************************************!*\
+  !*** ./src/components/fetchApiData.ts ***!
+  \****************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -13,9 +60,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 class FetchData {
     constructor(form) {
         this.form = form;
-        this.action = "amfetch_data";
+        this.action = "am_fetch_api_data";
         this.postId = form.querySelector("select[name='api-selector']").value;
-        this.container = document.getElementById('data-output');
+        this.container = document.getElementById('api-data-output');
         this.fetch();
     }
     fetch() {
@@ -55,8 +102,8 @@ class FetchData {
                 else {
                     let fieldHtml = `
                     <div>
-                        <input type="checkbox" class="api-field" value="${newKey}" />
-                        <label>${newKey}: ${value}</label>
+                        <input type="submit" class="api-field" value="${newKey}" />
+                        <label>${value}</label>
                     </div>`;
                     container.insertAdjacentHTML('beforeend', fieldHtml);
                 }
@@ -65,16 +112,15 @@ class FetchData {
         else {
             let fieldHtml = `
             <div>
-                <input type="checkbox" class="api-field" value="${parentKey}" />
-                <label>${parentKey}: ${item}</label>
+                <input type="submit" class="api-field" value="${parentKey}" />
+                <label>${item}</label>
             </div>`;
             container.insertAdjacentHTML('beforeend', fieldHtml);
         }
     }
 }
-const amFetchData = () => {
+const fetchApiData = () => {
     const form = document.getElementById('am_api_get');
-    console.log(form);
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -82,7 +128,89 @@ const amFetchData = () => {
         });
     }
 };
-exports["default"] = amFetchData;
+exports["default"] = fetchApiData;
+
+
+/***/ }),
+
+/***/ "./src/components/fetchCustomPostTypeData.ts":
+/*!***************************************************!*\
+  !*** ./src/components/fetchCustomPostTypeData.ts ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+class FetchData {
+    constructor(form) {
+        this.form = form;
+        this.action = "am_fetch_custom_post_type_data";
+        this.postType = form.querySelector("select[name='cpt-selector']").value;
+        this.container = document.getElementById('cpt-data-output');
+        this.fetch();
+    }
+    fetch() {
+        fetch(`${window.admin_globals.ajax_url}?action=${this.action}`, {
+            method: "POST",
+            credentials: "same-origin",
+            body: new URLSearchParams({
+                'post_type': this.postType,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+            if (data.success) {
+                if (this.container) {
+                    this.container.innerHTML = "";
+                }
+                this.displayData(data.data, this.container);
+            }
+        })
+            .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+    displayData(item, container, parentKey = '') {
+        if (Array.isArray(item)) {
+            item.forEach((childItem, index) => {
+                this.displayData(childItem, container, `${parentKey}[${index}]`);
+            });
+        }
+        else if (typeof item === 'object' && item !== null) {
+            Object.keys(item).forEach(key => {
+                let value = item[key];
+                let newKey = parentKey ? `${parentKey}.${key}` : key;
+                if (typeof value === 'object') {
+                    this.displayData(value, container, newKey);
+                }
+                else {
+                    let fieldHtml = `
+                <div>
+                    <input type="submit" class="cpt-field" value="${value}" />
+                </div>`;
+                    container.insertAdjacentHTML('beforeend', fieldHtml);
+                }
+            });
+        }
+        else {
+            let fieldHtml = `
+        <div>
+            <input type="submit" class="cpt-field" value="${item}" />
+        </div>`;
+            container.insertAdjacentHTML('beforeend', fieldHtml);
+        }
+    }
+}
+const fetchCustomPostTypeData = () => {
+    const form = document.getElementById('am_cpt_get');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            new FetchData(form);
+        });
+    }
+};
+exports["default"] = fetchCustomPostTypeData;
 
 
 /***/ }),
@@ -100,7 +228,7 @@ class LoginSelect {
         var _a;
         this.select = select;
         this.selectedValue = this.select.value;
-        this.action = "login_method_select";
+        this.action = "am_login_method_select";
         this.postId = ((_a = document.getElementById("post_ID")) === null || _a === void 0 ? void 0 : _a.value) || '';
         this.methodContainer = document.getElementById('selected_method');
     }
@@ -158,10 +286,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const loginMethodSelect_1 = __importDefault(__webpack_require__(/*! ./components/loginMethodSelect */ "./src/components/loginMethodSelect.ts"));
-const amFetchData_1 = __importDefault(__webpack_require__(/*! ./components/amFetchData */ "./src/components/amFetchData.ts"));
+const fetchApiData_1 = __importDefault(__webpack_require__(/*! ./components/fetchApiData */ "./src/components/fetchApiData.ts"));
+const fetchCustomPostTypeData_1 = __importDefault(__webpack_require__(/*! ./components/fetchCustomPostTypeData */ "./src/components/fetchCustomPostTypeData.ts"));
+const addMetafieldInputs_1 = __importDefault(__webpack_require__(/*! ./components/addMetafieldInputs */ "./src/components/addMetafieldInputs.ts"));
 const init = () => {
     (0, loginMethodSelect_1.default)();
-    (0, amFetchData_1.default)();
+    (0, fetchApiData_1.default)();
+    (0, fetchCustomPostTypeData_1.default)();
+    (0, addMetafieldInputs_1.default)();
 };
 init();
 

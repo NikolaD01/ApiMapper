@@ -2,6 +2,8 @@
 
 namespace AM\App\Http\Controllers\AdminAjax;
 
+use AM\App\Http\Utility\Constants\Constants;
+
 abstract class AbstractAdminAjaxController
 {
     public function __construct() {
@@ -17,8 +19,8 @@ abstract class AbstractAdminAjaxController
     abstract public function handle(): void;
     protected function registerAction(): void {
         $actionName = $this->getActionName();
-        add_action( 'wp_ajax_' . $actionName, [ $this, 'handle' ] );
-        add_action( 'wp_ajax_nopriv_' . $actionName, [ $this, 'handle' ] );
+        add_action( 'wp_ajax_' . Constants::getPrefixLower() . $actionName, [ $this, 'handle' ] );
+        add_action( 'wp_ajax_nopriv_' . Constants::getPrefixLower() . $actionName, [ $this, 'handle' ] );
     }
 
     protected function sanitize( array $data ): array {
